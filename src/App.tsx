@@ -9,6 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { useMediaQuery } from "react-responsive";
 
 interface GmpDataItem {
   ipo: string;
@@ -28,7 +35,10 @@ interface GmpDataItem {
 export default function App() {
   const [gmpData, setGmpData] = useState<GmpDataItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Type error as string or null
+  const [error, setError] = useState<string | null>(null);
+
+  // Use a media query to determine if the screen is small (mobile)
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" }); // Adjust the breakpoint if needed
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,11 +52,9 @@ export default function App() {
         const data = await response.json();
         setGmpData(data.data);
       } catch (err) {
-        // Check if 'err' is an instance of Error and has a message property
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          // Handle cases where the error is not an Error object or lacks a message
           setError("An unknown error occurred");
         }
       } finally {
@@ -64,20 +72,46 @@ export default function App() {
     return <div>Error: {error}</div>;
   }
 
-  return (
-    <div className="w-full overflow-x-auto">
+  const renderMobileView = () => (
+    <div className="p-4">
       {" "}
-      {/* Add this for horizontal scrolling */}
+      {/* Add padding to the container of the Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        {gmpData.map((item) => (
+          <AccordionItem key={item.ipo} value={item.ipo}>
+            <AccordionTrigger className={item.classname}>
+              {item.ipo}
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid grid-cols-2 gap-4">
+                <div>Price: {item.price}</div>
+                <div>GMP: {item.gmp}</div>
+                <div>Est. Listing: {item.est_listing}</div>
+                <div>IPO Size: {item.ipo_size}</div>
+                <div>Lot: {item.lot}</div>
+                <div>Open: {item.open}</div>
+                <div>Close: {item.close}</div>
+                <div>BOA Date: {item.boa_dt}</div>
+                <div>Listing: {item.listing}</div>
+                <div>GMP Updated: {item.gmp_updated}</div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  );
+
+  const renderDesktopView = () => (
+    <div className="w-full overflow-x-auto">
       <Table>
         <TableCaption>Live IPO GMP (Grey Market Premium) Data</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="whitespace-nowrap">IPO</TableHead>{" "}
-            {/* Prevent wrapping */}
+            <TableHead className="whitespace-nowrap">IPO</TableHead>
             <TableHead className="whitespace-nowrap hidden sm:table-cell">
               Price
-            </TableHead>{" "}
-            {/* Hide on small screens */}
+            </TableHead>
             <TableHead className="whitespace-nowrap hidden sm:table-cell">
               GMP
             </TableHead>
@@ -86,15 +120,13 @@ export default function App() {
             </TableHead>
             <TableHead className="whitespace-nowrap hidden md:table-cell">
               IPO Size
-            </TableHead>{" "}
-            {/* Hide on medium and smaller screens */}
+            </TableHead>
             <TableHead className="whitespace-nowrap hidden md:table-cell">
               Lot
             </TableHead>
             <TableHead className="whitespace-nowrap hidden lg:table-cell">
               Open
-            </TableHead>{" "}
-            {/* Hide on large and smaller screens */}
+            </TableHead>
             <TableHead className="whitespace-nowrap hidden lg:table-cell">
               Close
             </TableHead>
@@ -152,4 +184,6 @@ export default function App() {
       </Table>
     </div>
   );
+
+  return isMobile ? renderMobileView() : renderDesktopView();
 }
