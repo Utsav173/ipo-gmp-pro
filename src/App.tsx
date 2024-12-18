@@ -33,7 +33,7 @@ export default function App() {
 
   const isInitialFetch = useRef(true);
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-  const cacheDuration = 300000; // 5 minutes in milliseconds
+  const cacheDuration = 7200000; // 120 minutes in milliseconds
 
   const fetchApiData = async () => {
     try {
@@ -141,9 +141,7 @@ export default function App() {
       <div className="p-4 space-y-4">
         <Card>
           <CardContent className="p-4">
-            <div className="text-lg font-semibold text-primary">
-              An error occurred
-            </div>
+            <div className="tfont-semibold text-primary">An error occurred</div>
             <div className="text-muted-foreground">{error}</div>
           </CardContent>
         </Card>
