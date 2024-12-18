@@ -125,8 +125,6 @@ export default function App() {
   }, [gmpData]);
 
   const handleSort = (column: string) => {
-    console.log(column);
-
     setSortOrder(
       sortBy === column
         ? sortOrder === SortOrder.ASC
