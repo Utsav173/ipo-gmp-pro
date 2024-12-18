@@ -1,4 +1,4 @@
-import { GmpDataItem, SortBy } from "@/types";
+import { GmpDataItem, SortBy, SortOrder } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -100,7 +100,7 @@ export const priceFormatter = new Intl.NumberFormat("en-IN", {
 export const sortData = (
   data: GmpDataItem[],
   sortBy: SortBy,
-  sortOrder: "asc" | "desc"
+  sortOrder: SortOrder
 ): GmpDataItem[] => {
   return [...data].sort((a, b) => {
     let aVal = a[sortBy as keyof GmpDataItem] || "";
@@ -143,4 +143,14 @@ export const sortData = (
       ? aVal.toString().localeCompare(bVal.toString())
       : bVal.toString().localeCompare(aVal.toString());
   });
+};
+
+
+export const getSubscriptionColor = (subCount: string) => {
+  if (!subCount) return "text-gray-700 dark:text-gray-400";
+  const count = parseFloat(subCount);
+  if (count >= 100) return "text-red-500 dark:text-red-400";
+  if (count >= 50) return "text-blue-500 dark:text-blue-400";
+  if (count >= 1) return "text-green-700 dark:text-green-400";
+  return "text-pink-500 dark:text-gray-400";
 };

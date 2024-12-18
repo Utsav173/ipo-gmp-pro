@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Card } from "../ui/card";
 import {
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -14,7 +13,6 @@ import {
 } from "../ui/table";
 import { ArrowUpDown, ChevronDown, ChevronUp } from "lucide-react";
 import {
-  decodeHTML,
   formatDate,
   formatIPOSize,
   formatPrice,
@@ -22,6 +20,7 @@ import {
 } from "@/lib/utils";
 import { GmpDataItem, SearchAndControlsProps, StatsData } from "@/types";
 import { Badge } from "../ui/badge";
+import IPOText from "../common/IPOText";
 
 const Stats = lazy(() => import("../common/Stats"));
 const SearchAndControls = lazy(() => import("../common/SearchAndControls"));
@@ -54,6 +53,7 @@ const DeskTopTable = ({
   statsData: StatsData;
   handleSort: (column: string) => void;
 }) => {
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -74,9 +74,6 @@ const DeskTopTable = ({
       />
       <Card>
         <Table>
-          <TableCaption className="text-lg font-semibold text-primary">
-            Live IPO GMP (Grey Market Premium) Data
-          </TableCaption>
           <TableHeader>
             <TableRow>
               {[
@@ -123,7 +120,7 @@ const DeskTopTable = ({
                 className={`hover:bg-accent ${item.classname}`}
               >
                 <TableCell className="font-medium">
-                  {decodeHTML(item.ipo)}
+                  <IPOText ipoString={item.ipo} key={item.ipo} />
                 </TableCell>
                 <TableCell>{formatPrice(item.price)}</TableCell>
                 <TableCell>
@@ -147,11 +144,8 @@ const DeskTopTable = ({
           <TableFooter>
             <TableRow>
               <TableCell colSpan={11} className="text-center">
-                Data sourced from{" "}
-                <a href="https://investorgain.com" className="underline">
-                  investorgain.com
-                </a>{" "}
-                • Auto-refreshes every 5 minutes
+                Data sourced from the Varise website. The data auto-refreshes
+                every 5 minutes.
               </TableCell>
             </TableRow>
           </TableFooter>

@@ -17,6 +17,7 @@ import {
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
 import { GmpDataItem, SearchAndControlsProps, StatsData } from "@/types";
+import IPOText from "../common/IPOText";
 
 const Stats = lazy(() => import("../common/Stats"));
 const SearchAndControls = lazy(() => import("../common/SearchAndControls"));
@@ -91,9 +92,9 @@ const MobileTable = ({
                         className="font-medium text-left"
                         title={decodeHTML(item.ipo)}
                       >
-                        {decodeHTML(item.ipo)}
+                        <IPOText ipoString={item.ipo} />
                       </span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-black text-opacity-60">
                         {formatPrice(item.price)} • {item.lot} Shares
                       </span>
                     </div>

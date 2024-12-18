@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { decodeHTML, parseDate, sortData } from "./lib/utils";
 
 import { useMediaQuery } from "react-responsive";
-import { GmpDataItem, SortBy, StatsData } from "./types";
+import { GmpDataItem, SortBy, SortOrder, StatsData } from "./types";
 
 import Loader from "./components/common/Loader";
 
@@ -23,7 +23,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.OPEN);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<SortOrder.ASC | SortOrder.DESC>(
+    SortOrder.DESC
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const cache = useRef<{
@@ -123,10 +125,17 @@ export default function App() {
   }, [gmpData]);
 
   const handleSort = (column: string) => {
-    setSortOrder((prevOrder) =>
-      sortBy === column ? (prevOrder === "asc" ? "desc" : "asc") : "asc"
+    console.log(column);
+
+    setSortOrder(
+      sortBy === column
+        ? sortOrder === SortOrder.ASC
+          ? SortOrder.DESC
+          : SortOrder.ASC
+        : SortOrder.ASC
     );
-    setSortBy(SortBy[column as keyof typeof SortBy]);
+
+    setSortBy(column as SortBy);
   };
 
   const handleRefresh = () => {

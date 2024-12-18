@@ -35,13 +35,18 @@ export enum SortBy {
   GMP_UPDATED = "gmp_updated",
 }
 
+export enum SortOrder {
+  ASC = "asc",
+  DESC = "desc",
+}
+
 export interface SearchAndControlsProps {
   searchTerm: string;
   setSearchTerm: (value: SetStateAction<string>) => void;
   sortBy: string;
   setSortBy: (value: SetStateAction<SortBy>) => void;
-  sortOrder: "asc" | "desc";
-  setSortOrder: (value: SetStateAction<"asc" | "desc">) => void;
+  sortOrder: SortOrder.ASC | SortOrder.DESC;
+  setSortOrder: (value: SetStateAction<SortOrder>) => void;
   isMobile?: boolean;
   fetchData: VoidFunction;
   refreshing: boolean;

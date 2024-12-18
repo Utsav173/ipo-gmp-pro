@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { SearchAndControlsProps, SortBy } from "@/types";
+import { SearchAndControlsProps, SortBy, SortOrder } from "@/types";
 
 const SearchAndControls = ({
   searchTerm,
@@ -36,7 +36,7 @@ const SearchAndControls = ({
         <div className="flex gap-2 w-full">
           <Select
             onValueChange={(value: SetStateAction<string>) =>
-              setSortBy(SortBy[value as keyof typeof SortBy])
+              setSortBy(value as SortBy)
             }
             value={sortBy}
           >
@@ -58,9 +58,7 @@ const SearchAndControls = ({
             </SelectContent>
           </Select>
           <Select
-            onValueChange={(value: string) =>
-              setSortOrder(value as "asc" | "desc")
-            }
+            onValueChange={(value: SortOrder) => setSortOrder(value)}
             value={sortOrder}
           >
             <SelectTrigger className="w-[50%]">
