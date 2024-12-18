@@ -32,13 +32,18 @@ interface GmpDataItem {
   classname: string;
 }
 
+const decodeHTML = (html: string) => {
+  const tempElement = document.createElement("div");
+  tempElement.innerHTML = html;
+  return tempElement.textContent || tempElement.innerText || "";
+};
+
 export default function App() {
   const [gmpData, setGmpData] = useState<GmpDataItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Use a media query to determine if the screen is small (mobile)
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" }); // Adjust the breakpoint if needed
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +79,6 @@ export default function App() {
 
   const renderMobileView = () => (
     <div className="p-4">
-      {" "}
       {/* Add padding to the container of the Accordion */}
       <Accordion type="single" collapsible className="w-full">
         {gmpData.map((item) => (
@@ -87,11 +91,11 @@ export default function App() {
                 <div>Price: {item.price}</div>
                 <div>GMP: {item.gmp}</div>
                 <div>Est. Listing: {item.est_listing}</div>
-                <div>IPO Size: {item.ipo_size}</div>
-                <div>Lot: {item.lot}</div>
+                <div>IPO Size: {decodeHTML(item.ipo_size)}</div>
+                <div>Lot Size: {item.lot}</div>
                 <div>Open: {item.open}</div>
                 <div>Close: {item.close}</div>
-                <div>BOA Date: {item.boa_dt}</div>
+                <div>Basis of Allotment Date: {item.boa_dt}</div>
                 <div>Listing: {item.listing}</div>
                 <div>GMP Updated: {item.gmp_updated}</div>
               </div>
@@ -122,7 +126,7 @@ export default function App() {
               IPO Size
             </TableHead>
             <TableHead className="whitespace-nowrap hidden md:table-cell">
-              Lot
+              Lot Size
             </TableHead>
             <TableHead className="whitespace-nowrap hidden lg:table-cell">
               Open
@@ -131,7 +135,7 @@ export default function App() {
               Close
             </TableHead>
             <TableHead className="whitespace-nowrap hidden lg:table-cell">
-              BOA Date
+              Basis of Allotment Date
             </TableHead>
             <TableHead className="whitespace-nowrap hidden lg:table-cell">
               Listing
@@ -153,7 +157,7 @@ export default function App() {
                 {item.est_listing}
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                {item.ipo_size}
+                {decodeHTML(item.ipo_size)}
               </TableCell>
               <TableCell className="hidden md:table-cell">{item.lot}</TableCell>
               <TableCell className="hidden lg:table-cell">
