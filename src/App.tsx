@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, SetStateAction } from 'react';
 import {
   Table,
   TableBody,
@@ -309,7 +309,7 @@ export default function App() {
       </div>
       {isMobile && (
         <div className="flex gap-2 w-full">
-          <Select onValueChange={(value) => setSortBy(value)} value={sortBy}>
+          <Select onValueChange={(value: SetStateAction<string>) => setSortBy(value)} value={sortBy}>
             <SelectTrigger className="w-[50%]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
