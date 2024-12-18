@@ -65,3 +65,10 @@
   }
 }
 
+.color-green {
+  @apply bg-green-100;
+}
+
+.color-antiquewhite {
+  @apply bg-orange-100;
+}
