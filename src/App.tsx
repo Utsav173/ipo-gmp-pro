@@ -82,11 +82,23 @@ export default function App() {
       <Accordion type="single" collapsible className="w-full">
         {gmpData.map((item) => (
           <AccordionItem key={item.ipo} value={item.ipo}>
-            <AccordionTrigger className={`hover:bg-accent ${item.classname?.startsWith("color-") ? `bg-${item.classname}` : "bg-white"} text-lg`}>
-              {decodeHTML(item.ipo)}
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ml-2">
-                {item.gmp}
-              </span>
+            <AccordionTrigger
+              className={`hover:bg-accent truncate ${item.classname?.startsWith('color-')
+                  ? `bg-${item.classname}`
+                  : 'bg-white'
+                }`}
+            >
+              <div className="flex items-center justify-between w-[85vw]">
+                <span
+                  className="truncate block max-w-full"
+                  title={decodeHTML(item.ipo)}
+                >
+                  {decodeHTML(item.ipo)}
+                </span>
+                <span className="min-w-14 text-center bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ml-2">
+                  &#x20B9;{item.gmp}
+                </span>
+              </div>
             </AccordionTrigger>
             <AccordionContent>
               <div className="grid grid-cols-2 gap-2 text-sm">
@@ -145,7 +157,7 @@ export default function App() {
             >
               <TableCell className="font-medium">{decodeHTML(item.ipo)}</TableCell>
               <TableCell>{item.price}</TableCell>
-              <TableCell>{item.gmp}</TableCell>
+              <TableCell>&#x20B9;{item.gmp}</TableCell>
               <TableCell>{item.est_listing}</TableCell>
               <TableCell>{decodeHTML(item.ipo_size)}</TableCell>
               <TableCell>{item.lot}</TableCell>
