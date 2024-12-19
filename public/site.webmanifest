@@ -1,6 +1,6 @@
 {
   "name": "IPO GMP PRO",
-  "short_name": "GMP PRO",
+  "short_name": "IPO Pro",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#000000",
   "display": "standalone"
 }
