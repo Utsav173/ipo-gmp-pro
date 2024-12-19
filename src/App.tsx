@@ -108,13 +108,15 @@ export default function App() {
     const now = new Date();
     const activeIPOs = gmpData.filter((item) => {
       const openDate = parseDate(item.open);
-      return openDate && openDate > now && !item.listing;
+      const closeDate = parseDate(item.close);
+      return openDate && now >= openDate && closeDate && now <= closeDate;
     }).length;
 
     const upcomingIPOs = gmpData.filter((item) => {
       const openDate = parseDate(item.open);
-      return !openDate || openDate > now;
+      return openDate && openDate > now;
     }).length;
+
     const avgGMP =
       gmpData
         .filter((item) => item.gmp !== "-")

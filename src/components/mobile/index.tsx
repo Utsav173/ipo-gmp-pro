@@ -91,7 +91,7 @@ const MobileTable = ({
                         className="font-medium text-left"
                         title={decodeHTML(item.ipo)}
                       >
-                     {decodeHTML(item.ipo)}
+                        {decodeHTML(item.ipo)}
                       </span>
                       <span className="text-sm text-black text-opacity-60">
                         {formatPrice(item.price)} • {item.lot} Shares
